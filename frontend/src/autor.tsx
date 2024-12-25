@@ -55,7 +55,7 @@ export default function Footer({ show }: { show: boolean }) {
                     特别鸣谢:
                     <a style={{ color: "var(--text-200)", fontSize: "13px" }} href='https://d5v.cc'>deadmau5v</a>
 
-                    <a style={{ color: "var(--text-200)", fontSize: "13px", paddingLeft: "10px" }} href='https://skv.cool'>邓保平</a>协助开发
+                    <a style={{ color: "var(--text-200)", fontSize: "13px", paddingLeft: "10px" }}>邓保平</a>协助开发
 
                     <a style={{ color: "var(--text-200)", fontSize: "13px", paddingLeft: "10px" }}>陈婷</a>提供课表
 

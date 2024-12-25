@@ -2,6 +2,7 @@ package admin
 
 import (
 	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -74,7 +75,7 @@ func getDataFiles(ctx *gin.Context) {
 			continue
 		}
 
-		filteredFiles = append(filteredFiles, file.Name())
+		filteredFiles = append(filteredFiles, strings.ReplaceAll(file.Name(), ".wakeup_schedule", ""))
 	}
 
 	ctx.JSON(200, gin.H{

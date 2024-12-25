@@ -27,8 +27,8 @@ function App() {
                     setNotice("");
                 }
             })
-            .catch((e) => {
-                setNotice(e.toString());
+            .catch(() => {
+                setNotice("服务器繁忙，请稍后再试。");
             });
         console.log(notice);
     }, [notice]);
@@ -46,7 +46,7 @@ function App() {
                     onClose={() => setErrorMessage("")}
                     message={errorMessage}
                 />
-                <StyledImage src="https://cdn1.d5v.cc/CDN/Image/hq.png" />
+                <StyledImage src="https://cdn1.d5v.cc/ymjew503t0m000d5qavemlzcb3m5hag3DIYPAwFxDwe1DcxxDO==.webp" />
                 <Typography variant="h1" fontSize={38} color="var(--primary-100)" fontWeight={"bold"}>
                     湖汽课表
                 </Typography>

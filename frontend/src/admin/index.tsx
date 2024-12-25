@@ -1,5 +1,83 @@
-import { useEffect, useState } from "react";
-import { Button, TextField, Typography, Box } from '@mui/material';
+import {useEffect, useState} from "react";
+import {Button, TextField, Typography, Box} from '@mui/material';
+
+export default function Admin() {
+
+    useEffect(() => {
+        CheckLogin();
+    }, [])
+
+    return (
+        <Box style={{
+            maxWidth: '800px',
+            margin: 'auto',
+            marginTop: '5vh',
+            gap: '16px'
+        }}>
+            <Typography style={{
+                fontSize: '24px',
+                marginBottom: '16px',
+                color: "var(--primary-100)"
+            }}>
+                湖汽课表 - 管理员页面
+            </Typography>
+            <Typography
+                style={{
+                    fontSize: '16px',
+                    marginBottom: '16px',
+                    color: "var(--text-200)"
+                }}>
+                请勿泄露管理员密码
+            </Typography>
+
+            {/* 设置公告按钮 */}
+            <Box style={{
+                alignItems: "center",
+                gap: '16px',
+                border: '1px solid gray',
+                display: 'flex',
+                padding: '16px',
+                borderRadius: '8px',
+                flexDirection: 'column'
+            }}>
+                <Typography>设置公告</Typography>
+                <SetNotice/>
+            </Box>
+
+
+            {/* 添加数据 */}
+            <Box
+                style={{
+                    alignItems: "center",
+                    gap: '16px',
+                    border: '1px solid gray',
+                    display: 'flex',
+                    padding: '16px',
+                    borderRadius: '8px',
+                    flexDirection: 'column',
+                    marginTop: '16px'
+                }}>
+                <Typography>添加课表</Typography>
+                <AddData/>
+            </Box>
+
+            <Box style={{
+                alignItems: "center",
+                gap: '16px',
+                border: '1px solid gray',
+                display: 'flex',
+                padding: '16px',
+                borderRadius: '8px',
+                flexDirection: 'column',
+                marginTop: '16px'
+            }}>
+                {/* 删除数据 */}
+                <Typography>管理已有课表</Typography>
+                <DataFiles/>
+            </Box>
+        </Box>
+    );
+}
 
 function CheckLogin() {
     fetch("/api/check", {
@@ -14,23 +92,6 @@ function CheckLogin() {
     })
 }
 
-export default function Admin() {
-
-    useEffect(() => {
-        CheckLogin();
-    }, [])
-
-    return (
-        <Box>
-            <SetNotice />
-            <hr />
-            <AddData />
-            <hr />
-            <DataFiles />
-        </Box>
-    );
-}
-
 function SetNotice() {
     const [ok, setOk] = useState(false);
 
@@ -41,7 +102,7 @@ function SetNotice() {
                 'Content-Type': 'application/json',
                 "Authorization": `${localStorage.getItem('token')}`
             },
-            body: JSON.stringify({ notice: (document.getElementById('notice') as HTMLInputElement).value })
+            body: JSON.stringify({notice: (document.getElementById('notice') as HTMLInputElement).value})
         }).then(response => {
             setOk(response.ok);
         })
@@ -49,7 +110,18 @@ function SetNotice() {
 
     return (
         <Box display="flex" alignItems="center">
-            <TextField id="notice" label="公告" variant="outlined" />
+            <TextField id="notice" variant="outlined" sx={{
+                height: "40px",
+                "& .MuiInputBase-root": {
+                    color: "var(--text-100)",
+                    height: "40px"
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "var(--text-100)",
+                    color: "var(--text-100)",
+                    height: "40px"
+                }
+            }}/>
             <Button variant="contained" color="primary" onClick={handleSetNotice}>设置公告</Button>
             {ok && <Typography color="success.main">设置成功</Typography>}
         </Box>
@@ -80,7 +152,7 @@ function AddData() {
 
     return (
         <Box>
-            <input type="file" multiple id="upload-data" />
+            <input type="file" multiple id="upload-data"/>
             <Button variant="contained" color="primary" onClick={handleFileUpload}>上传文件</Button>
         </Box>
     );
@@ -138,13 +210,31 @@ function DataFiles() {
     }
 
     return (
-        <Box>
-            <Button variant="outlined" color="primary" onClick={handleClean}>清空</Button>
-            <Button variant="outlined" color="primary" onClick={handleRefresh}>刷新</Button>
+        <Box style={{
+            padding: '16px',
+            width: '100%'
+        }}>
+            <Box style={{
+                marginTop: '16px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderBottom: '1px solid gray',
+                paddingBottom: '16px',
+                marginBottom: '16px'
+            }}>
+                <Typography>操作</Typography>
+                <Button variant="outlined" color="error" onClick={handleClean}>清空</Button>
+                <Button variant="outlined" color="primary" onClick={handleRefresh}>刷新</Button>
+            </Box>
             {files.map(file => (
-                <Box key={file} display="flex" justifyContent="space-between" alignItems="center">
+                <Box key={file} style={{
+                    borderBottom: '1px solid gray',
+                    paddingBottom: '16px',
+                    marginBottom: '16px'
+                }} display="flex" justifyContent="space-between" alignItems="center">
                     <Typography>{file}</Typography>
-                    <Button variant="outlined" color="primary" onClick={() => handleDelete(file)}>删除</Button>
+                    <Button variant="outlined" color="error" onClick={() => handleDelete(file)}>删除</Button>
                 </Box>
             ))}
         </Box>
