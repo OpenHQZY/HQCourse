@@ -1,3 +1,7 @@
+# 次脚本用于生成前端用到的一些固定数据
+# 由于需要登录教务系统 不公开 data.html 文件
+# 运行该脚本，转换后的数据将保存到 jsons 文件夹中。
+
 import os
 import bs4
 import json
@@ -9,7 +13,7 @@ html = open("data.html", "r", encoding="utf-8").read()
 
 trs = bs4.BeautifulSoup(html, "lxml").find("table").find_all("tr")
 
-
+# 设置前端每个班级显示的icon
 iconMap = {
     "机器人": "机器人",
     "计": "计算机",
